@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ProjetFilRouge.Models.Publication>
+
+@{
+    ViewData["Title"] = "Home";
+}
+<!-- end #menu -->
+<div id="page">
+    <div id="sidebar" class="col-3">
+        <ul>
+            <li>
+                <h2>Menu</h2>
+                <ul>
+                    <li><a href="#">S'inscrire</a></li>
+                    <li><a asp-action="Edit" asp-controller="Utilisateurs" asp-route-id="">Modifier ses informations</a></li>
+                    <li>
+                        <a asp-action="Create">Créer une Publication</a>
+                    </li>
+                    <li><a asp-action="Details" asp-controller="Publications" asp-route-id="">Commenter une Publication</a></li>
+                    <li><a asp-action="Create" asp-controller="Canal">Créer un Canal</a></li>
+                </ul>
+                <ul>
+                    <li><a asp-action="Create" asp-controller="Utilisateurs" asp-route-id="">Ajouter une Utilisateur</a></li>
+                    <li><a asp-action="Index" asp-controller="Utilisateur" asp-route-id="">Valider une Inscrpition d'Utilisateur</a></li>
+                    <li><a asp-action="" asp-controller="" asp-route-id="">Supprimer un Utilisateur</a></li>
+                    <li><a asp-action="" asp-controller="" asp-route-id="">Valider une Publication</a></li>
+                    <li><a asp-action="" asp-controller="" asp-route-id="">Supprimer une Publication</a></li>
+                    <li><a asp-action="" asp-controller="" asp-route-id="">Désactiver un Canal</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="content" class="border border-1 p-2">
+        @foreach (var item in Model)
+        {
+            if (item.Validite == true)
+            {
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <div class="post">
+                        <h2 class="title">
+                            @Html.DisplayFor(modelItem => item.Titre)
+                        </h2>
+                        <p class="meta">
+                            <span class="date">
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </span>
+                            <span class="posted">
+                                Publié par @Html.DisplayFor(modelItem => item.Auteur.Nom)
+                            </span>
+                        </p>
+                        <div style="clear: both;">&nbsp;</div>
+                        <div class="entry">
+                            <p>
+                                @Html.DisplayFor(modelItem => item.Contenu)
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <div>
+                    @if (ViewBag.User != null)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"> Supprimer </a>
+
+                    }
+                </div>
+
+            }
+        }
+        <div style="clear: both;">&nbsp;</div>
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    </div>
+    <!-- end #content -->
+    <!-- end #sidebar -->
+    <div style="clear: both;">&nbsp;</div>
+</div>
