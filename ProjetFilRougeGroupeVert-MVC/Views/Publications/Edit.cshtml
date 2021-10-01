@@ -4,52 +4,93 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="row bg-light p-2">
-    <div class="col-md-4">
+<div class="d-flex justify-content-center container-fluid bg-light p-3">
+    <div class="col-md-7">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Date" class="control-label"></label>
+                            <input asp-for="Date" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Titre" class="control-label"></label>
-                <input asp-for="Titre" class="form-control" />
-                <span asp-validation-for="Titre" class="text-danger"></span>
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Titre" class="control-label"></label>
+                            <input asp-for="Titre" class="form-control" />
+                            <span asp-validation-for="Titre" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Contenu" class="control-label"></label>
-                <textarea asp-for="Contenu" class="form-control" ></textarea>
-                <span asp-validation-for="Contenu" class="text-danger"></span>
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Contenu" class="control-label"></label>
+                            <textarea asp-for="Contenu" class="form-control"></textarea>
+                            <span asp-validation-for="Contenu" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Validite" /> @Html.DisplayNameFor(model => model.Validite)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuteurId" class="control-label"></label>
-                <select asp-for="AuteurId" class="form-control" asp-items="ViewBag.AuteurId"></select>
-                <span asp-validation-for="AuteurId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanalId" class="control-label"></label>
-                <select asp-for="CanalId" class="form-control" asp-items="ViewBag.CanalId"></select>
-                <span asp-validation-for="CanalId" class="text-danger"></span>
+
+            @if (ViewBag.RoleConnected == "ADMIN")
+            {
+                <div class="d-flex">
+                    <div class="d-flex justify-content-center w-100">
+                        <div class=" p-2 col-6">
+                            <div class="form-group">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Validite" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex">
+                    <div class="d-flex justify-content-center w-100">
+                        <div class=" p-2 col-6">
+                            <div class="form-group">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Validite" value="False" type="hidden" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="CanalId" class="control-label"></label>
+                            <select asp-for="CanalId" class="form-control" asp-items="ViewBag.Canaux"></select>
+                            <span asp-validation-for="CanalId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

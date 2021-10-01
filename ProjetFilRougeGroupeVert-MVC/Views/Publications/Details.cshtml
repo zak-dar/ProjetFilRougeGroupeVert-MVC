@@ -4,49 +4,34 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 
-<div class="bg-light p-3">
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Titre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Titre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Contenu)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Contenu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Auteur)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Auteur.Nom) @Html.DisplayFor(model => model.Auteur.Prenom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Canal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Canal.Nom)
-        </dd>
-    </dl>
+<div style="background-color:whitesmoke" class="container-fluid d-flex justify-content-center align-items-center text-center align-middle flex-wrap p-2">
+    <div class="container-fluid w-100 rounded p-2 border border-secondary">
+        <h1 class="text-black text-center p-2">Mes Publications</h1>
+    </div>
+    <div class="container-fluid w-100 rounded p-2 border border-secondary">
+        <div class="container-fluid d-flex text-center flex-column text-black">
+            <dl>
+                <dt>Titre</dt>
+                <dd>@Html.DisplayFor(model => model.Titre)</dd>
+                <dt>Date</dt>
+                <dd>@Html.DisplayFor(model => model.Date)</dd>
+                <dt>Contenu</dt>
+                <dd>@Html.DisplayFor(model => model.Contenu)</dd>
+                <dt>Auteur</dt>
+                <dd>@Html.DisplayFor(model => model.Auteur.Nom)</dd>
+                <dt>Canal</dt>
+                <dd>@Html.DisplayFor(model => model.Canal.Nom)</dd>
+            </dl>
+            <div>
+                @if (ViewBag.userId == @Model.Auteur.Id.ToString())
+                {
+                    <a class="btn btn-info rounded" asp-action="Edit" asp-route-id="@Model.Id">Modifier</a>
+                }
+
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    @if (ViewBag.User != null)
-    {
-        @if (ViewBag.User == Model.Auteur.Id)
-        {
-            <a asp-action="Edit" asp-route-id="@Model.Id">Modifier</a>
-        }
-    }
-    <a class="text-light" asp-action="Index">Retour à la liste</a>
-</div>
+
+

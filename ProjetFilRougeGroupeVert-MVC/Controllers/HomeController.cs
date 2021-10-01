@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjetFilRougeGroupeVert_MVC.Models;
 using System;
@@ -20,6 +21,7 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("user", "1");
             return View();
         }
 

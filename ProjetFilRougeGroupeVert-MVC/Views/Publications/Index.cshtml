@@ -11,21 +11,18 @@
                 <h2>Menu</h2>
                 <ul>
                     <li><a href="#">S'inscrire</a></li>
-                    <li><a asp-action="Edit" asp-controller="Utilisateurs" asp-route-id="">Modifier ses informations</a></li>
-                    <li>
-                        <a asp-action="Create">Créer une Publication</a>
-                    </li>
-                    <li><a asp-action="Details" asp-controller="Publications" asp-route-id="">Commenter une Publication</a></li>
+                    <li><a asp-action="Create" asp-controller="Publications">Créer une Publication</a></li>
                     <li><a asp-action="Create" asp-controller="Canal">Créer un Canal</a></li>
                 </ul>
-                <ul>
-                    <li><a asp-action="Create" asp-controller="Utilisateurs" asp-route-id="">Ajouter une Utilisateur</a></li>
-                    <li><a asp-action="Index" asp-controller="Utilisateur" asp-route-id="">Valider une Inscrpition d'Utilisateur</a></li>
-                    <li><a asp-action="" asp-controller="" asp-route-id="">Supprimer un Utilisateur</a></li>
-                    <li><a asp-action="" asp-controller="" asp-route-id="">Valider une Publication</a></li>
-                    <li><a asp-action="" asp-controller="" asp-route-id="">Supprimer une Publication</a></li>
-                    <li><a asp-action="" asp-controller="" asp-route-id="">Désactiver un Canal</a></li>
-                </ul>
+                @if (ViewBag.RoleConnected == "ADMIN")
+                {
+                    <ul>
+                        <li><a asp-action="Create" asp-controller="Utilisateurs" asp-route-id="">Ajouter une Utilisateur</a></li>
+                        <li><a asp-action="UtilisateursIndex" asp-controller="Administrateurs" asp-route-id="">Gérer les Utilisateurs</a></li>
+                        <li><a asp-action="PublicationsIndex" asp-controller="Administrateurs" asp-route-id="">Gérer les Publication</a></li>
+                        <li><a asp-action="CanalsIndex" asp-controller="Administrateurs" asp-route-id="">Gérer les Canaux</a></li>
+                    </ul>
+                }
             </li>
         </ul>
     </div>
@@ -55,12 +52,11 @@
                         </div>
                     </div>
                 </a>
-                <div>
-                    @if (ViewBag.User != null)
+                <div class="btn-group">
+                    @if (ViewBag.userId == item.Auteur.Id.ToString())
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id"> Supprimer </a>
-
+                        <a class="btn-info rounded m-2 p-2" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                        <a class="btn-danger rounded m-2 p-2" asp-action="Delete" asp-route-id="@item.Id"> Supprimer </a>
                     }
                 </div>
 
@@ -71,7 +67,5 @@
             <a asp-action="Create">Create New</a>
         </p>
     </div>
-    <!-- end #content -->
-    <!-- end #sidebar -->
     <div style="clear: both;">&nbsp;</div>
 </div>

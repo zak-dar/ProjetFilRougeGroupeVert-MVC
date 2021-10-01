@@ -1,77 +1,78 @@
-﻿@model IEnumerable<ProjetFilRouge.Models.Utilisateur>
+﻿@model ProjetFilRouge.Models.Utilisateur
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container-fluid d-flex justify-content-center align-items-center text-center align-middle flex-wrap">
+    <div style="background-color:whitesmoke" class="container-fluid w-100 rounded p-2 border border-white">
+        <div class="container-fluid d-flex border border-secondary rounded p-2 text-center flex-column text-black">
+            <h2>Mon Compte</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table bg-light p-2">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Valide)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonneType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prenom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotDePasse)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateNaissance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Valide)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonneType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prenom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MotDePasse)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateNaissance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <form>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <span>Nom : </span>
+                        </div>
+                        <div class=" p-2">
+                            @Html.DisplayFor(model => model.Nom)
+                        </div>
+                        <div class="d-flex p-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <span>Prenom : </span>
+                        </div>
+                        <div class="p-2">
+                            @Html.DisplayFor(model => model.Prenom)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <span>Email : </span>
+                        </div>
+                        <div class=" p-2">
+                            @Html.DisplayFor(model => model.Email)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <span>Mot De Passe : </span>
+                        </div>
+                        <div class=" p-2">
+                            @Html.DisplayFor(model => model.MotDePasse)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <span>Date de Naissance : </span>
+                        </div>
+                        <div class=" p-2">
+                            @Html.DisplayFor(model => model.DateNaissance)
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a class="btn btn-info rounded p-2" asp-action="Edit" asp-route-id="@Model.Id">Modifier mes infos</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -33,7 +33,6 @@ namespace ProjetFilRougeGroupeVert_MVC.Context
             modelBuilder.Entity<Canal>().ToTable("channel");
             modelBuilder.Entity<Canal>().Property(c => c.Id).HasColumnName("id");
             modelBuilder.Entity<Canal>().Property(c => c.Nom).HasColumnName("name");
-            modelBuilder.Entity<Canal>().Property(c => c.Theme).HasConversion<String>();
             modelBuilder.Entity<Canal>().Property(c => c.Id).HasColumnName("id");
             modelBuilder.Entity<Canal>().HasMany(c => c.Publications).WithOne(p => p.Canal).HasForeignKey(p => p.CanalId);
             #endregion

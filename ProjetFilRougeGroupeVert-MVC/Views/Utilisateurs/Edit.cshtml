@@ -4,64 +4,104 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>Utilisateur</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Valide" /> @Html.DisplayNameFor(model => model.Valide)
-                </label>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="PersonneType" class="control-label"></label>
-                <input asp-for="PersonneType" class="form-control" />
-                <span asp-validation-for="PersonneType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nom" class="control-label"></label>
-                <input asp-for="Nom" class="form-control" />
-                <span asp-validation-for="Nom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prenom" class="control-label"></label>
-                <input asp-for="Prenom" class="form-control" />
-                <span asp-validation-for="Prenom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MotDePasse" class="control-label"></label>
-                <input asp-for="MotDePasse" class="form-control" />
-                <span asp-validation-for="MotDePasse" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateNaissance" class="control-label"></label>
-                <input asp-for="DateNaissance" class="form-control" />
-                <span asp-validation-for="DateNaissance" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <select asp-for="Role" asp-items="ViewBag.Role" class="form-control"></select>
-                <span asp-validation-for="Role" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container-fluid d-flex justify-content-center align-items-center text-center align-middle flex-wrap">
+    <div style="background-color:whitesmoke" class="container-fluid w-100 rounded p-2 border border-white">
+        <div class="container-fluid d-flex border border-secondary rounded p-2 text-center flex-column text-black">
+            <h2>Mes Informations</h2>
+
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <div class="form-group">
+                                <label asp-for="Nom" class="control-label"></label>
+                                <input asp-for="Nom" class="form-control" />
+                                <span asp-validation-for="Nom" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <div class="form-group">
+                                <label asp-for="Prenom" class="control-label"></label>
+                                <input asp-for="Prenom" class="form-control" />
+                                <span asp-validation-for="Prenom" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Adresse Mail</label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <div class="form-group">
+                                <label asp-for="MotDePasse" class="control-label">Mot De Passe</label>
+                                <input asp-for="MotDePasse" class="form-control" type="password" />
+                                <span asp-validation-for="MotDePasse" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center flex-column">
+                    <div class="d-flex justify-content-center">
+                        <div class=" p-2">
+                            <div class="form-group">
+                                <label asp-for="DateNaissance" class="control-label">Date de Naissance</label>
+                                <input asp-for="DateNaissance" class="form-control" type="date" />
+                                <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (ViewBag.userRole == "ADMIN")
+                {
+                    <div class="d-flex justify-content-center flex-column">
+                        <div class="d-flex justify-content-center">
+                            <div class=" p-2">
+                                <div class="form-group">
+                                    <label asp-for="Role" class="control-label">Date de Naissance</label>
+                                    <select asp-for="Role" class="form-control" asp-items="ViewBag.Role" type="date"></select>
+                                    <span asp-validation-for="Role" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" value="" asp-for="Role" />
+                }
+
+
+
+                <div class="form-group">
+                    <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                </div>
+
+            </form>
+
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

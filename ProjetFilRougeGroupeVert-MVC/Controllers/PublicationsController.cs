@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,37 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
             _context = context;
         }
 
+
+
+
+
+
+
+
+
+
         // GET: Publications
         public async Task<IActionResult> Index()
         {
-            var myContext = _context.Publication.Include(p => p.Auteur).Include(p => p.Canal);
+            HttpContext.Session.SetString("userId", "1");
+
+            //on récupere l'utilisateur connecté et on récupere son role
+            Utilisateur user = _context.Utilisateur.Where(u => u.Id.ToString() == HttpContext.Session.GetString("userId")).First();
+            ViewData["RoleConnected"] = user.Role.ToString();
+            ViewData["userId"] = HttpContext.Session.GetString("userId");
+
+            var myContext = _context.Publication.Where(p => p.Validite == true).Include(p => p.Auteur).Include(p => p.Canal);
             return View(await myContext.ToListAsync());
         }
+
+
+
+
+
+
+
+
+
 
         // GET: Publications/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -43,34 +69,67 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
                 return NotFound();
             }
 
+            ViewData["userId"] = HttpContext.Session.GetString("userId");
             return View(publication);
         }
+
+
+
+
+
+
+
+
+
 
         // GET: Publications/Create
         public IActionResult Create()
         {
-            ViewData["AuteurId"] = new SelectList(_context.Set<Utilisateur>(), "Id", "PersonneType");
-            ViewData["CanalId"] = new SelectList(_context.Set<Canal>(), "Id", "Id");
+            var canaux = _context.Canal.ToList();
+
+            ViewData["Canaux"] = new SelectList(_context.Canal, "Id", "Nom");
             return View();
         }
 
+
+
         // POST: Publications/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Titre,Contenu,Validite,AuteurId,CanalId")] Publication publication)
+        public async Task<IActionResult> Create([Bind("Date,Titre,Contenu,CanalId")] Publication publication)
         {
             if (ModelState.IsValid)
             {
+                publication.Auteur = _context.Utilisateur.Where(u => u.Id.ToString() == HttpContext.Session.GetString("userId")).First();
+                if (publication.Auteur.Role.ToString() == "ADMIN" )
+                {
+                    publication.Validite = true;
+                }
+                else
+                {
+                    publication.Validite = false;
+                }
                 _context.Add(publication);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuteurId"] = new SelectList(_context.Set<Utilisateur>(), "Id", "PersonneType", publication.AuteurId);
-            ViewData["CanalId"] = new SelectList(_context.Set<Canal>(), "Id", "Id", publication.CanalId);
-            return View(publication);
+            ViewData["Canaux"] = new SelectList(_context.Canal,"Id", "Nom");
+            return RedirectToAction("Index");
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Publications/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -85,17 +144,16 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuteurId"] = new SelectList(_context.Set<Utilisateur>(), "Id", "PersonneType", publication.AuteurId);
-            ViewData["CanalId"] = new SelectList(_context.Set<Canal>(), "Id", "Id", publication.CanalId);
+            ViewData["Canaux"] = new SelectList(_context.Canal, "Id", "Nom");
             return View(publication);
         }
 
+
+
         // POST: Publications/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Titre,Contenu,Validite,AuteurId,CanalId")] Publication publication)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Titre,Contenu,AuteurId,CanalId")] Publication publication)
         {
             if (id != publication.Id)
             {
@@ -106,6 +164,15 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
             {
                 try
                 {
+                    publication.Auteur = _context.Utilisateur.Where(u => u.Id.ToString() == HttpContext.Session.GetString("userId")).First();
+                    if (publication.Auteur.Role.ToString() == "ADMIN")
+                    {
+                        publication.Validite = true;
+                    }
+                    else
+                    {
+                        publication.Validite = false;
+                    }
                     _context.Update(publication);
                     await _context.SaveChangesAsync();
                 }
@@ -122,10 +189,18 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuteurId"] = new SelectList(_context.Set<Utilisateur>(), "Id", "PersonneType", publication.AuteurId);
-            ViewData["CanalId"] = new SelectList(_context.Set<Canal>(), "Id", "Id", publication.CanalId);
-            return View(publication);
+            return RedirectToAction("Index");
         }
+
+
+
+
+
+
+
+
+
+
 
         // GET: Publications/Delete/5
         public async Task<IActionResult> Delete(int? id)

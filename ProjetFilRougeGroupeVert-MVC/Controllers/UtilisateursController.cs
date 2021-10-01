@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,39 +21,30 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
         }
 
         // GET: Utilisateurs
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Utilisateur.ToListAsync());
+            return View( _context.Utilisateur.Where(u => u.Id.ToString() == HttpContext.Session.GetString("userId")).First());
         }
 
-        // GET: Utilisateurs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var utilisateur = await _context.Utilisateur
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
 
-            return View(utilisateur);
-        }
+
+
+
+
+
+
+
 
         // GET: Utilisateurs/Create
         public IActionResult Create()
         {
-            ViewData["Role"] = new SelectList(Enum.GetValues(typeof(Role)));
+            ViewData["RoleConnected"] = "ADMIN";
+            ViewData["Role"] = new SelectList(Enum.GetValues(typeof(Role)),"UTILISATEUR");
             return View();
         }
 
         // POST: Utilisateurs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Valide,Id,PersonneType,Nom,Prenom,Email,MotDePasse,DateNaissance,Role")] Utilisateur utilisateur)
@@ -65,6 +57,12 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
             }
             return View(utilisateur);
         }
+
+
+
+
+
+
 
         // GET: Utilisateurs/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -84,8 +82,6 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
         }
 
         // POST: Utilisateurs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Valide,Id,PersonneType,Nom,Prenom,Email,MotDePasse,DateNaissance,Role")] Utilisateur utilisateur)
@@ -118,26 +114,17 @@ namespace ProjetFilRougeGroupeVert_MVC.Controllers
             return View(utilisateur);
         }
 
-        // GET: Utilisateurs/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var utilisateur = await _context.Utilisateur
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
 
-            return View(utilisateur);
-        }
+
+
+
+
+
+
 
         // POST: Utilisateurs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

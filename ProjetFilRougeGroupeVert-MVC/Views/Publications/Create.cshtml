@@ -4,51 +4,63 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Publication</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="d-flex justify-content-center container-fluid bg-light p-3">
+    <div class="col-md-7">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label" ></label>
-                <input asp-for="Date" class="form-control" type="date" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Date" class="control-label"></label>
+                            <input asp-for="Date" class="form-control" type="date" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Titre" class="control-label"></label>
-                <input asp-for="Titre" class="form-control" />
-                <span asp-validation-for="Titre" class="text-danger"></span>
+
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Titre" class="control-label"></label>
+                            <input asp-for="Titre" class="form-control" />
+                            <span asp-validation-for="Titre" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Contenu" class="control-label"></label>
-                <textarea asp-for="Contenu" class="form-control" ></textarea>
-                <span asp-validation-for="Contenu" class="text-danger"></span>
+
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="Contenu" class="control-label"></label>
+                            <textarea asp-for="Contenu" class="form-control"></textarea>
+                            <span asp-validation-for="Contenu" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Validite" /> @Html.DisplayNameFor(model => model.Validite)
-                </label>
+
+            <div class="d-flex">
+                <div class="d-flex justify-content-center w-100">
+                    <div class=" p-2 col-6">
+                        <div class="form-group">
+                            <label asp-for="CanalId" class="control-label">Choisissez le canal</label>
+                            <select asp-for="CanalId" class="form-control" asp-items="ViewBag.Canaux"></select>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AuteurId" class="control-label"></label>
-                <select asp-for="AuteurId" class ="form-control" asp-items="ViewBag.AuteurId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CanalId" class="control-label"></label>
-                <select asp-for="CanalId" class ="form-control" asp-items="ViewBag.CanalId"></select>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
